@@ -1,0 +1,23 @@
+# Model files (too large for GitHub)
+model.save
+transform.save
+
+# Dataset (too large for GitHub)
+*.csv
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment
+.env
+venv/
+*.egg-info/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
