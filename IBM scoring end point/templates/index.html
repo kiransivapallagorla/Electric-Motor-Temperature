@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Motor Temperature Prediction</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #1a3c5e;
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 22px;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 28px;
+            font-size: 14px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-size: 13px;
+            color: #444;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input {
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.2s;
+        }
+        input:focus { border-color: #1a3c5e; }
+        .btn {
+            grid-column: 1 / -1;
+            background: #1a3c5e;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #245080; }
+        .result {
+            margin-top: 24px;
+            padding: 16px;
+            background: #e8f5e9;
+            border-left: 4px solid #2e7d32;
+            border-radius: 6px;
+            color: #2e7d32;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ Electric Motor Temperature Prediction</h1>
+        <p class="subtitle">Enter motor sensor readings to predict rotor temperature</p>
+
+        <form action="/predict" method="POST">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Ambient Temperature</label>
+                    <input type="number" step="any" name="ambient" placeholder="e.g. 25.0" required>
+                </div>
+                <div class="form-group">
+                    <label>Coolant Temperature</label>
+                    <input type="number" step="any" name="coolant" placeholder="e.g. 30.0" required>
+                </div>
+                <div class="form-group">
+                    <label>Voltage u_d</label>
+                    <input type="number" step="any" name="u_d" placeholder="e.g. -1.5" required>
+                </div>
+                <div class="form-group">
+                    <label>Voltage u_q</label>
+                    <input type="number" step="any" name="u_q" placeholder="e.g. 2.3" required>
+                </div>
+                <div class="form-group">
+                    <label>Motor Speed (rpm)</label>
+                    <input type="number" step="any" name="motor_speed" placeholder="e.g. 1500" required>
+                </div>
+                <div class="form-group">
+                    <label>Torque (Nm)</label>
+                    <input type="number" step="any" name="torque" placeholder="e.g. 10.5" required>
+                </div>
+                <div class="form-group">
+                    <label>Current i_d (A)</label>
+                    <input type="number" step="any" name="i_d" placeholder="e.g. -0.5" required>
+                </div>
+                <div class="form-group">
+                    <label>Current i_q (A)</label>
+                    <input type="number" step="any" name="i_q" placeholder="e.g. 3.2" required>
+                </div>
+                <div class="form-group">
+                    <label>Stator Yoke Temp</label>
+                    <input type="number" step="any" name="stator_yoke" placeholder="e.g. 45.0" required>
+                </div>
+                <div class="form-group">
+                    <label>Stator Tooth Temp</label>
+                    <input type="number" step="any" name="stator_tooth" placeholder="e.g. 48.0" required>
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label>Stator Winding Temp</label>
+                    <input type="number" step="any" name="stator_winding" placeholder="e.g. 50.0" required>
+                </div>
+                <button class="btn" type="submit">Predict Temperature</button>
+            </div>
+        </form>
+
+        {% if prediction_text %}
+        <div class="result">{{ prediction_text }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
